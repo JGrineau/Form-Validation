@@ -3,8 +3,12 @@ import useForm from './useForm'
 import validate from './validateInfo'
 import './Form.css'
 
-const FormSignup = () => {
-    const {handleChange, values, handleSubmit, errors} = useForm(validate);
+const FormSignup = ({submitForm}) => {
+    const {handleChange, values, handleSubmit, errors} 
+    = useForm(
+        submitForm,
+        validate 
+        );
 
 
   return (
