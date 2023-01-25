@@ -6,7 +6,7 @@ const FormSuccess = () => {
         <div className='form-success'>
             We have recieved your request!
         </div>
-        <img src='images/logo_red.png' className='form-img-2' />
+        <img src='images/logo_red.png' alt='logo' className='form-img-2' />
     </div>
     
   )
