@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import FormSignup from './FormSignup';
 import LoginForm from './LoginForm';
 import ForgotPassword from './ForgotPassword';
@@ -10,7 +10,7 @@ const Form = () => {
     const [currentPage, setCurrentPage] = useState('signup');
 
     // Valid routes
-    const validRoutes = ['login', 'signup', 'forgot-password', 'success', ''];
+    const validRoutes = useMemo(() => ['login', 'signup', 'forgot-password', 'success', ''], []);
 
     const navigateTo = useCallback((page) => {
         setCurrentPage(page);
