@@ -7,26 +7,17 @@ import AccountSuccess from './AccountSuccess';
 import './Form.css';
 
 const Form = () => {
-    const [isSubmitted, setIsSubmitted] = useState(false);
-    const [isLogin, setIsLogin] = useState(false);
     const [currentPage, setCurrentPage] = useState('signup');
 
     // Valid routes
     const validRoutes = ['login', 'signup', 'forgot-password', 'success', ''];
 
     function submitForm() {
-        setIsSubmitted(true);
         navigateTo('success');
     }
 
     const navigateTo = (page) => {
         setCurrentPage(page);
-        if (page === 'login') {
-            setIsLogin(true);
-        } else if (page === 'signup') {
-            setIsLogin(false);
-        }
-        setIsSubmitted(false);
         // Update URL without page reload
         window.history.pushState({}, '', page === '' ? '/' : `/${page}`);
     };
@@ -45,7 +36,7 @@ const Form = () => {
 
         window.addEventListener('popstate', handlePopState);
         return () => window.removeEventListener('popstate', handlePopState);
-    }, []);
+    }, [validRoutes, navigateTo]);
 
     // Initial route handling
     useEffect(() => {
@@ -55,7 +46,7 @@ const Form = () => {
         } else {
             setCurrentPage('404');
         }
-    }, []);
+    }, [validRoutes, navigateTo]);
 
     const renderContent = () => {
         switch (currentPage) {
