@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import FormSignup from './FormSignup';
 import LoginForm from './LoginForm';
 import ForgotPassword from './ForgotPassword';
@@ -12,15 +12,15 @@ const Form = () => {
     // Valid routes
     const validRoutes = ['login', 'signup', 'forgot-password', 'success', ''];
 
-    function submitForm() {
-        navigateTo('success');
-    }
-
-    const navigateTo = (page) => {
+    const navigateTo = useCallback((page) => {
         setCurrentPage(page);
         // Update URL without page reload
         window.history.pushState({}, '', page === '' ? '/' : `/${page}`);
-    };
+    }, [setCurrentPage]);
+
+    function submitForm() {
+        navigateTo('success');
+    }
 
     // Handle browser back/forward buttons
     useEffect(() => {
@@ -36,7 +36,7 @@ const Form = () => {
 
         window.addEventListener('popstate', handlePopState);
         return () => window.removeEventListener('popstate', handlePopState);
-    }, [validRoutes, navigateTo]);
+    }, [navigateTo, validRoutes]);
 
     // Initial route handling
     useEffect(() => {
@@ -46,7 +46,7 @@ const Form = () => {
         } else {
             setCurrentPage('404');
         }
-    }, [validRoutes, navigateTo]);
+    }, [navigateTo, validRoutes]);
 
     const renderContent = () => {
         switch (currentPage) {
